@@ -1,0 +1,19 @@
+{
+  "name": "akord-eval",
+  "version": "1.0.0",
+  "description": "Akıllı Açık Uçlu Sınav Değerlendirme, Anlamsal Analiz ve Rubrik Onay Sistemi",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "education",
+    "assessment",
+    "rubric-evaluation",
+    "open-ended-grading",
+    "ai-grading",
+    "teacher-in-the-loop"
+  ],
+  "author": "Akord AI",
+  "license": "MIT"
+}

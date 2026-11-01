@@ -1,0 +1,126 @@
+/* styles.css - AkordEval Styling */
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --accent: #4f46e5;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --bg-main: #f8fafc;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-main);
+  color: #1e293b;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Evidence Highlighting Styles */
+.evidence-pill {
+  padding: 2px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  display: inline;
+}
+
+.evidence-success {
+  background-color: #dcfce7;
+  color: #14532d;
+  border-bottom: 2px solid #22c55e;
+}
+.evidence-success:hover {
+  background-color: #bbf7d0;
+}
+
+.evidence-warning {
+  background-color: #fef3c7;
+  color: #78350f;
+  border-bottom: 2px solid #f59e0b;
+}
+.evidence-warning:hover {
+  background-color: #fde68a;
+}
+
+.evidence-error {
+  background-color: #fee2e2;
+  color: #7f1d1d;
+  border-bottom: 2px solid #ef4444;
+  text-decoration: underline wavy #ef4444;
+}
+.evidence-error:hover {
+  background-color: #fecaca;
+}
+
+.evidence-neutral {
+  background-color: #f1f5f9;
+  color: #334155;
+  border-bottom: 2px solid #94a3b8;
+}
+
+/* Glassmorphism cards */
+.glass-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Status Badge Animations */
+@keyframes pulseGlow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.02); }
+}
+
+.badge-draft {
+  animation: pulseGlow 2.5s infinite ease-in-out;
+}
+
+/* Custom Tooltip */
+.tooltip-box {
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #1e293b;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 50;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+}
+.evidence-pill:hover .tooltip-box {
+  opacity: 1;
+}
+
+/* Tab animations */
+.tab-content-enter-active,
+.tab-content-leave-active {
+  transition: opacity 0.2s ease;
+}
+.tab-content-enter-from,
+.tab-content-leave-to {
+  opacity: 0;
+}

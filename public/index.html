@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AkordEval - Öğretmen Değerlendirme & Yapay Zeka Eğitim Platformu</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Vue.js 3 -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+  <div id="app" class="flex-1 flex flex-col">
+
+    <!-- TOP HEADER NAVBAR -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          
+          <!-- Logo & Brand -->
+          <div class="flex items-center space-x-3 cursor-pointer" @click="goToStudents">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-extrabold text-xl shadow-md shadow-blue-500/20">
+              A
+            </div>
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-blue-700 to-indigo-800 bg-clip-text text-transparent">AkordEval</span>
+                <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-full border border-blue-200">Öğretmen Masası</span>
+              </div>
+              <p class="text-xs text-slate-400 font-medium">Akıllı Açık Uçlu Sınav Değerlendirme & Yapay Zeka Eğitimi</p>
+            </div>
+          </div>
+
+          <!-- Global Stats Overview -->
+          <div class="hidden md:flex items-center space-x-3 text-xs font-medium">
+            <div class="flex items-center space-x-1.5 bg-slate-100 px-3 py-1.5 rounded-lg text-slate-700">
+              <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+              <span>Kayıtlı Öğrenci: <b>{{ globalStats.totalStudents }}</b></span>
+            </div>
+            <div class="flex items-center space-x-1.5 bg-amber-50 px-3 py-1.5 rounded-lg text-amber-800 border border-amber-200">
+              <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+              <span>Onay Bekleyen Taslak: <b>{{ globalStats.draftCount }}</b></span>
+            </div>
+            <div class="flex items-center space-x-1.5 bg-emerald-50 px-3 py-1.5 rounded-lg text-emerald-800 border border-emerald-200">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span>Onaylanan Not: <b>{{ globalStats.approvedCount }}</b></span>
+            </div>
+          </div>
+
+          <!-- Actions & Controls -->
+          <div class="flex items-center space-x-2.5">
+            <!-- Train AI Shortcut -->
+            <button 
+              @click="openTrainAiModal(selectedAssessmentId)"
+              class="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-indigo-50 border border-indigo-200 hover:border-indigo-300 text-indigo-700 rounded-lg text-xs font-bold shadow-xs transition"
+              title="Yapay zekanın değerlendirme kurallarını ve rubriğini düzenle"
+            >
+              <span>🧠 Yapay Zekayı Eğit / Rubrik</span>
+            </button>
+
+            <!-- Export Button -->
+            <button 
+              @click="exportGrades(selectedAssessmentId)"
+              class="inline-flex items-center space-x-1 px-3 py-1.5 bg-white border border-slate-200 hover:border-slate-300 text-slate-700 rounded-lg text-xs font-semibold shadow-xs transition hover:bg-slate-50"
+              title="LMS uyumlu CSV not kütüğü indir"
+            >
+              <span>📥 Notları İndir</span>
+            </button>
+
+            <!-- Settings Button -->
+            <button 
+              @click="showSettingsModal = true"
+              class="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition"
+              title="Yapay Zeka ve API Ayarları"
+            >
+              ⚙️
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- INTERACTIVE BREADCRUMB NAVIGATION BAR -->
+    <div class="bg-white border-b border-slate-200 shadow-xs">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+        <nav class="flex items-center space-x-2 text-xs font-medium text-slate-500">
+          
+          <!-- Home / Students -->
+          <button 
+            @click="goToStudents" 
+            class="hover:text-blue-600 transition flex items-center space-x-1 font-semibold"
+            :class="currentView === 'students' ? 'text-blue-600 font-bold' : ''"
+          >
+            <span>👥 Öğrenci Profilleri</span>
+          </button>
+
+          <!-- Step 2: Selected Student -->
+          <template v-if="currentView !== 'students' && activeStudent">
+            <span>/</span>
+            <button 
+              @click="currentView = 'student_detail'" 
+              class="hover:text-blue-600 transition font-semibold"
+              :class="currentView === 'student_detail' ? 'text-blue-600 font-bold' : ''"
+            >
+              {{ activeStudent.name }}
+            </button>
+          </template>
+
+          <!-- Step 3: Selected Course -->
+          <template v-if="(currentView === 'course_detail' || currentView === 'evaluation') && activeCourse">
+            <span>/</span>
+            <button 
+              @click="currentView = 'course_detail'" 
+              class="hover:text-blue-600 transition font-semibold"
+              :class="currentView === 'course_detail' ? 'text-blue-600 font-bold' : ''"
+            >
+              {{ activeCourse.code }} - {{ activeCourse.title }}
+            </button>
+          </template>
+
+          <!-- Step 4: Assessment Evaluation -->
+          <template v-if="currentView === 'evaluation' && activeAssessment">
+            <span>/</span>
+            <span class="text-slate-800 font-bold">
+              {{ activeAssessment.title }} (Değerlendirme Sonucu)
+            </span>
+          </template>
+
+        </nav>
+      </div>
+    </div>
+
+    <!-- MAIN BODY CONTENT -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+
+      <!-- ========================================================================= -->
+      <!-- VIEW 1: ÖĞRENCİ PROFİLLERİ LİSTESİ (STUDENTS OVERVIEW) -->
+      <!-- ========================================================================= -->
+      <div v-if="currentView === 'students'" class="space-y-6">
+        
+        <!-- Welcome Banner & Search -->
+        <div class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white rounded-2xl p-6 shadow-md flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="space-y-1">
+            <h1 class="text-xl font-extrabold tracking-tight">Öğretmen Değerlendirme & Onay Masası</h1>
+            <p class="text-xs text-blue-100 max-w-2xl leading-relaxed">
+              Öğrencilerinizin profillerine tıklayarak kayıtlı oldukları dersleri, açık uçlu sınavlarını ve ödevlerini inceleyebilir; yapay zekanın rubrik analizini gözden geçirip notları resmi olarak onaylayabilirsiniz.
+            </p>
+          </div>
+
+          <!-- Search Bar -->
+          <div class="w-full md:w-72">
+            <input 
+              type="text" 
+              v-model="studentSearchQuery"
+              placeholder="Öğrenci adı, no veya bölüm ara..."
+              class="w-full px-3.5 py-2 text-xs bg-white/10 text-white placeholder-blue-200 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/40"
+            >
+          </div>
+        </div>
+
+        <!-- Student Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div 
+            v-for="std in filteredStudents" 
+            :key="std.id"
+            @click="selectStudent(std.id)"
+            class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs hover:shadow-md hover:border-blue-300 transition cursor-pointer flex flex-col justify-between group relative overflow-hidden"
+            :class="std.id === 'std-irem' ? 'ring-2 ring-blue-500/30 bg-gradient-to-b from-blue-50/20 to-white' : ''"
+          >
+            <!-- Highlight Ribbon for Irem Nur Saral -->
+            <div v-if="std.id === 'std-irem'" class="absolute top-0 right-0 bg-blue-600 text-white text-[9px] font-extrabold uppercase tracking-wider px-3 py-0.5 rounded-bl-lg shadow-xs">
+              Öne Çıkan Öğrenci
+            </div>
+
+            <!-- Header: Avatar & Info -->
+            <div class="flex items-start space-x-3.5">
+              <img 
+                :src="std.avatar" 
+                :alt="std.name" 
+                class="w-14 h-14 rounded-full object-cover ring-2 ring-slate-100 shadow-xs shrink-0"
+              >
+              <div class="space-y-1">
+                <h3 class="text-base font-bold text-slate-900 group-hover:text-blue-600 transition">
+                  {{ std.name }}
+                </h3>
+                <p class="text-xs text-slate-500 font-mono">{{ std.studentNumber }}</p>
+                <p class="text-xs text-slate-600 font-medium">{{ std.department }} • {{ std.gradeLevel }}</p>
+              </div>
+            </div>
+
+            <!-- Course & Assessment Summary Badges -->
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <div class="flex items-center space-x-1.5 text-slate-600">
+                <span class="font-semibold">{{ std.enrolledCourseIds ? std.enrolledCourseIds.length : 0 }} Ders</span>
+                <span>•</span>
+                <span>{{ std.submissionCount }} Sınav/Ödev</span>
+              </div>
+
+              <!-- Status Badge -->
+              <div>
+                <span 
+                  v-if="std.pendingCount > 0"
+                  class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-200 animate-pulse"
+                >
+                  {{ std.pendingCount }} Onay Bekleyen
+                </span>
+                <span 
+                  v-else 
+                  class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-200"
+                >
+                  ✓ Tümü Onaylı
+                </span>
+              </div>
+            </div>
+
+            <!-- Action Prompt -->
+            <div class="mt-3 pt-2 text-right">
+              <span class="text-xs font-bold text-blue-600 group-hover:translate-x-1 transition inline-flex items-center space-x-1">
+                <span>Dersleri & Sınavları Gör</span>
+                <span>→</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ========================================================================= -->
+      <!-- VIEW 2: ÖĞRENCİ DETAYI & KAYITLI DERSLERİ -->
+      <!-- ========================================================================= -->
+      <div v-if="currentView === 'student_detail'" class="space-y-6">
+        
+        <!-- Student Profile Card Banner -->
+        <div v-if="activeStudent" class="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="flex items-center space-x-4">
+            <img 
+              :src="activeStudent.avatar" 
+              :alt="activeStudent.name" 
+              class="w-16 h-16 rounded-full object-cover ring-4 ring-blue-50 shadow-sm"
+            >
+            <div class="space-y-1">
+              <div class="flex items-center space-x-2">
+                <h2 class="text-xl font-bold text-slate-900">{{ activeStudent.name }}</h2>
+                <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-0.5 rounded-full">
+                  {{ activeStudent.gradeLevel }}
+                </span>
+              </div>
+              <p class="text-xs text-slate-500 font-mono">{{ activeStudent.studentNumber }} • {{ activeStudent.email }}</p>
+              <p class="text-xs text-slate-700 font-medium">Bölüm: <b>{{ activeStudent.department }}</b></p>
+            </div>
+          </div>
+
+          <button 
+            @click="goToStudents"
+            class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition"
+          >
+            ← Öğrenci Listesine Dön
+          </button>
+        </div>
+
+        <!-- Section Title -->
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-base font-bold text-slate-900">Kayıtlı Olduğu Dersler</h3>
+            <p class="text-xs text-slate-500">Öğrencinin bu dönem aldığı ve açık uçlu sınavları bulunan dersler.</p>
+          </div>
+          <span class="text-xs font-semibold text-slate-400">{{ studentEnrolledCourses.length }} Aktif Ders</span>
+        </div>
+
+        <!-- Courses Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div 
+            v-for="course in studentEnrolledCourses" 
+            :key="course.id"
+            @click="selectCourse(course.id)"
+            class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs hover:shadow-md hover:border-blue-400 transition cursor-pointer flex flex-col justify-between group"
+          >
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="px-2.5 py-0.5 rounded text-xs font-extrabold uppercase"
+                  :class="course.color === 'emerald' ? 'bg-emerald-100 text-emerald-800' : (course.color === 'indigo' ? 'bg-indigo-100 text-indigo-800' : 'bg-blue-100 text-blue-800')">
+                  {{ course.code }}
+                </span>
+                <span class="text-[11px] text-slate-400 font-medium">{{ course.term }}</span>
+              </div>
+
+              <h4 class="text-base font-bold text-slate-900 group-hover:text-blue-600 transition">
+                {{ course.title }}
+              </h4>
+
+              <p class="text-xs text-slate-500 leading-relaxed">
+                {{ course.description }}
+              </p>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <span class="text-slate-500">Öğretim Üyesi: <b>{{ course.instructor }}</b></span>
+              <span class="font-bold text-blue-600 group-hover:translate-x-1 transition">
+                Sınavları Aç →
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ========================================================================= -->
+      <!-- VIEW 3: DERSTEKİ SINAVLAR VE ÖDEVLER -->
+      <!-- ========================================================================= -->
+      <div v-if="currentView === 'course_detail'" class="space-y-6">
+        
+        <!-- Course Header & AI Training Button -->
+        <div v-if="activeCourse" class="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="space-y-1">
+            <div class="flex items-center space-x-2">
+              <span class="px-2.5 py-0.5 rounded text-xs font-bold bg-blue-100 text-blue-800">{{ activeCourse.code }}</span>
+              <h2 class="text-lg font-bold text-slate-900">{{ activeCourse.title }}</h2>
+            </div>
+            <p class="text-xs text-slate-500">
+              Öğretim Üyesi: <b>{{ activeCourse.instructor }}</b> • Öğrenci: <b class="text-blue-700">{{ activeStudent?.name }}</b>
+            </p>
+          </div>
+
+          <div class="flex items-center space-x-2">
+            <!-- Train AI for this course -->
+            <button 
+              @click="openTrainAiModal(courseAssessments[0]?.id)"
+              class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-xs transition flex items-center space-x-1.5"
+            >
+              <span>🧠 Bu Sınav İçin Yapay Zekayı Eğit / Rubrik Gir</span>
+            </button>
+
+            <button 
+              @click="currentView = 'student_detail'"
+              class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition"
+            >
+              ← Derslere Dön
+            </button>
+          </div>
+        </div>
+
+        <!-- Assessments List -->
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-base font-bold text-slate-900">Açık Uçlu Sınavlar & Ödevler</h3>
+            <span class="text-xs text-slate-500">{{ courseAssessments.length }} Değerlendirme Bulundu</span>
+          </div>
+
+          <div class="space-y-3">
+            <div 
+              v-for="asn in courseAssessments" 
+              :key="asn.id"
+              class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-blue-300 transition"
+            >
+              <!-- Info -->
+              <div class="space-y-1.5 max-w-2xl">
+                <div class="flex items-center space-x-2">
+                  <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase"
+                    :class="asn.type === 'Sınav' ? 'bg-purple-100 text-purple-800' : 'bg-emerald-100 text-emerald-800'">
+                    {{ asn.type }}
+                  </span>
+                  <h4 class="text-base font-bold text-slate-900">{{ asn.title }}</h4>
+                </div>
+                <p class="text-xs text-slate-600 font-medium line-clamp-2">
+                  "{{ asn.question }}"
+                </p>
+                <div class="flex items-center space-x-3 text-[11px] text-slate-400">
+                  <span>Maksimum Puan: <b>{{ asn.maxScore }}</b></span>
+                  <span>•</span>
+                  <span>Ölçüt Sayısı: <b>{{ asn.rubric.length }} Kriter</b></span>
+                  <span>•</span>
+                  <span>Zorunlu Anlam: <b>{{ asn.mandatoryConcepts ? asn.mandatoryConcepts.length : 0 }} Öbek</b></span>
+                </div>
+              </div>
+
+              <!-- Status & Action Button -->
+              <div class="flex items-center space-x-3 shrink-0">
+                <!-- Submission Status for this student -->
+                <div class="text-right">
+                  <template v-if="getSubmissionForAssessment(asn.id)">
+                    <div v-if="getSubmissionForAssessment(asn.id).teacherReview?.isApproved">
+                      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                        ✓ Onaylandı ({{ getSubmissionForAssessment(asn.id).teacherReview.approvedScore }}/{{ asn.maxScore }})
+                      </span>
+                    </div>
+                    <div v-else-if="getSubmissionForAssessment(asn.id).status === 'draft_ai'">
+                      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300 animate-pulse">
+                        AI Taslağı: {{ getSubmissionForAssessment(asn.id).aiEvaluation?.suggestedScore }}/{{ asn.maxScore }} (Onay Bekliyor)
+                      </span>
+                    </div>
+                  </template>
+                  <template v-else>
+                    <span class="text-xs text-slate-400 italic">Teslim Bulunmuyor</span>
+                  </template>
+                </div>
+
+                <!-- Open Assessment Button -->
+                <button 
+                  v-if="getSubmissionForAssessment(asn.id)"
+                  @click="viewAssessmentResult(asn.id)"
+                  class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow-sm transition flex items-center space-x-1"
+                >
+                  <span>🔍 Değerlendirme Sonucunu Göster</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ========================================================================= -->
+      <!-- VIEW 4: DEĞERLENDİRME SONUCUNU GÖSTER & ÖĞRETMEN ONAY MASASI -->
+      <!-- ========================================================================= -->
+      <div v-if="currentView === 'evaluation'" class="space-y-6">
+        
+        <!-- Soru ve Bilgi Başlığı -->
+        <div v-if="activeAssessment" class="bg-blue-50/70 border border-blue-200 rounded-2xl p-5 shadow-xs space-y-2">
+          <div class="flex items-start justify-between">
+            <div class="space-y-1">
+              <div class="flex items-center space-x-2">
+                <span class="bg-blue-600 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
+                  {{ activeAssessment.type }}
+                </span>
+                <h2 class="text-base font-bold text-slate-900">{{ activeAssessment.title }}</h2>
+                <span class="text-xs text-slate-500 font-medium">({{ activeCourse?.code }})</span>
+              </div>
+              <p class="text-xs text-slate-800 font-medium leading-relaxed">
+                "{{ activeAssessment.question }}"
+              </p>
+            </div>
+
+            <div class="flex items-center space-x-2 shrink-0 ml-4">
+              <!-- Re-train / Edit rubric for this assessment -->
+              <button 
+                @click="openTrainAiModal(activeAssessment.id)"
+                class="px-3 py-1.5 bg-white border border-indigo-200 hover:border-indigo-400 text-indigo-700 rounded-xl text-xs font-bold shadow-xs transition"
+              >
+                ⚙️ Rubriği & AI Eğitimi Düzenle
+              </button>
+              <button 
+                @click="currentView = 'course_detail'"
+                class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition"
+              >
+                ← Sınavlara Dön
+              </button>
+            </div>
+          </div>
+
+          <!-- AI Instructions Reminder if present -->
+          <div v-if="activeAssessment.aiInstructions" class="bg-white/80 p-2.5 rounded-lg border border-blue-100 text-[11px] text-slate-600">
+            <b>Öğretmenin Yapay Zekaya Eğitici Talimatı:</b> "{{ activeAssessment.aiInstructions }}"
+          </div>
+        </div>
+
+        <!-- 2-Column Split: Left (Student Answer & Evidence), Right (AI Report & Teacher Approval) -->
+        <div v-if="activeSubmission" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+          <!-- LEFT COLUMN: STUDENT PAPER & EVIDENCE HIGHLIGHTER (7 COLS) -->
+          <div class="lg:col-span-7 space-y-4">
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-xs p-6 space-y-5">
+              
+              <!-- Student Header -->
+              <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div class="flex items-center space-x-3">
+                  <img :src="activeStudent?.avatar" class="w-10 h-10 rounded-full object-cover shadow-xs">
+                  <div>
+                    <h3 class="text-sm font-bold text-slate-900">{{ activeStudent?.name }}</h3>
+                    <p class="text-[11px] text-slate-400 font-mono">No: {{ activeStudent?.studentNumber }} • Teslim: {{ activeSubmission.submittedAt }}</p>
+                  </div>
+                </div>
+
+                <button 
+                  @click="reevaluateCurrentSubmission"
+                  :disabled="isEvaluating"
+                  class="px-3 py-1.5 bg-blue-50 border border-blue-200 hover:bg-blue-100 text-blue-700 rounded-lg text-xs font-semibold transition"
+                >
+                  {{ isEvaluating ? 'İnceleniyor...' : '🧠 Tekrar Analiz Et' }}
+                </button>
+              </div>
+
+              <!-- Evidence Legend -->
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex flex-wrap items-center justify-between gap-2 text-xs">
+                <span class="font-bold text-slate-600">Yapay Zeka Kanıt Analizi:</span>
+                <div class="flex items-center space-x-3">
+                  <span class="inline-flex items-center space-x-1">
+                    <span class="w-3 h-3 rounded bg-emerald-200 border border-emerald-500 inline-block"></span>
+                    <span class="text-emerald-900 font-medium">Doğru / Ölçüt Karşılandı</span>
+                  </span>
+                  <span class="inline-flex items-center space-x-1">
+                    <span class="w-3 h-3 rounded bg-amber-200 border border-amber-500 inline-block"></span>
+                    <span class="text-amber-900 font-medium">Eksik / Yüzeysel</span>
+                  </span>
+                  <span class="inline-flex items-center space-x-1">
+                    <span class="w-3 h-3 rounded bg-rose-200 border border-rose-500 inline-block"></span>
+                    <span class="text-rose-900 font-medium">Neden & Neresi Yanlış</span>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Highlighted Student Answer -->
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                  Öğrencinin Açık Uçlu Sınav Kağıdı (Metin İçi Vurgulama)
+                </label>
+                <div 
+                  v-if="activeSubmission.aiEvaluation && activeSubmission.aiEvaluation.evidenceHighlights"
+                  class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 text-sm leading-relaxed text-slate-800 font-normal select-text space-y-2"
+                  v-html="renderEvidenceText(activeSubmission.studentText, activeSubmission.aiEvaluation.evidenceHighlights)"
+                ></div>
+                <div 
+                  v-else 
+                  class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 text-sm leading-relaxed text-slate-800"
+                >
+                  {{ activeSubmission.studentText }}
+                </div>
+                <p class="text-[11px] text-slate-400 mt-1 italic">
+                  💡 İpucu: Vurgulanan renkli cümlelerin üzerine gelerek yapay zekanın gerekçesini ve puanını okuyabilirsiniz.
+                </p>
+              </div>
+
+              <!-- Mandatory Phrases / Paraphrase Checks -->
+              <div v-if="activeSubmission.aiEvaluation?.mandatoryConceptsAnalysis?.length" class="space-y-2 pt-3 border-t border-slate-100">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center justify-between">
+                  <span>Öğretmenin Zorunlu Cümle / Anlam Öbekleri Denetimi</span>
+                  <span class="text-[11px] text-indigo-600 font-semibold">Paraphrase / Anlamsal Eşlik</span>
+                </h4>
+
+                <div class="space-y-2">
+                  <div 
+                    v-for="(m, mIdx) in activeSubmission.aiEvaluation.mandatoryConceptsAnalysis" 
+                    :key="mIdx"
+                    class="p-3 rounded-xl border text-xs"
+                    :class="m.status === 'tam_eslesme' 
+                      ? 'bg-emerald-50/80 border-emerald-200 text-emerald-950' 
+                      : (m.status === 'kismen_eslesme' ? 'bg-amber-50/80 border-amber-200 text-amber-950' : 'bg-rose-50/80 border-rose-200 text-rose-950')"
+                  >
+                    <div class="flex items-center justify-between font-bold mb-1">
+                      <span>"{{ m.concept }}"</span>
+                      <span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold"
+                        :class="m.status === 'tam_eslesme' ? 'bg-emerald-200 text-emerald-800' : (m.status === 'kismen_eslesme' ? 'bg-amber-200 text-amber-800' : 'bg-rose-200 text-rose-800')">
+                        {{ m.status === 'tam_eslesme' ? '✓ Anlam Doğrulandı (Farklı Cümle)' : (m.status === 'kismen_eslesme' ? '⚠ Kısmen Karşılandı' : '✕ Yazılmamış') }}
+                      </span>
+                    </div>
+                    <p class="text-slate-600 leading-snug">{{ m.explanation }}</p>
+                    <div v-if="m.detectedSentence" class="mt-1.5 text-[11px] font-mono text-slate-500 italic bg-white/80 p-1.5 rounded-lg border border-slate-200/60">
+                      Öğrencinin ifadesi: "{{ m.detectedSentence }}"
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN: AI REPORT & TEACHER APPROVAL GATE (5 COLS) -->
+          <div class="lg:col-span-5 space-y-4">
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-xs p-6 space-y-5">
+              
+              <!-- Scores Header -->
+              <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div>
+                  <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Yapay Zeka Önerisi</span>
+                  <div class="flex items-baseline space-x-1 mt-0.5">
+                    <span class="text-3xl font-extrabold text-blue-600">
+                      {{ activeSubmission.aiEvaluation ? activeSubmission.aiEvaluation.suggestedScore : 0 }}
+                    </span>
+                    <span class="text-xs font-semibold text-slate-400">/ {{ activeAssessment.maxScore }} Puan</span>
+                  </div>
+                </div>
+
+                <!-- Teacher Final Score Override Box -->
+                <div class="text-right">
+                  <span class="text-xs font-bold uppercase tracking-wider text-slate-600">Öğretmen Onaylı Not</span>
+                  <div class="flex items-center justify-end space-x-1.5 mt-0.5">
+                    <input 
+                      type="number" 
+                      min="0" 
+                      :max="activeAssessment.maxScore"
+                      v-model.number="teacherReviewForm.approvedScore"
+                      class="w-20 px-2 py-1 text-right font-extrabold text-2xl text-slate-900 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      :class="activeSubmission.teacherReview?.isApproved ? 'border-emerald-500 bg-emerald-50/50' : 'border-amber-400 bg-amber-50/40'"
+                    >
+                    <span class="text-xs font-bold text-slate-400">/{{ activeAssessment.maxScore }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- MANDATORY APPROVAL BANNER -->
+              <div 
+                class="rounded-xl p-3.5 text-xs space-y-1.5 border"
+                :class="activeSubmission.teacherReview?.isApproved 
+                  ? 'bg-emerald-50 border-emerald-200 text-emerald-900' 
+                  : 'bg-amber-50 border-amber-300 text-amber-900'"
+              >
+                <div class="flex items-center space-x-2 font-bold">
+                  <span v-if="activeSubmission.teacherReview?.isApproved">✅ NOT RESMİ OLARAK ONAYLANDI</span>
+                  <span v-else class="animate-pulse">⚠️ ÖĞRETMEN ONAYI BEKLENİYOR</span>
+                </div>
+                <p v-if="activeSubmission.teacherReview?.isApproved" class="text-slate-600 text-[11px]">
+                  Bu not <b>{{ activeSubmission.teacherReview.reviewedBy }}</b> tarafından 
+                  <b>{{ activeSubmission.teacherReview.approvedAt }}</b> tarihinde onaylanıp öğrencinin resmi kütüğüne işlenmiştir.
+                </p>
+                <p v-else class="text-slate-700 text-[11px] leading-relaxed">
+                  <b>Sistem Güvencesi:</b> Yapay zekanın notu sadece bir taslaktır. Siz inceleyip onaylamadan öğrenciye veya karneye <b>asla</b> yansıtılmaz.
+                </p>
+              </div>
+
+              <!-- AI DIAGNOSIS (Neden Yanlış Buldu? Nereyi Yanlış Buldu?) -->
+              <div v-if="activeSubmission.aiEvaluation?.teacherDiagnosis" class="space-y-2">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700">Yapay Zekanın Öğretmene Raporu</h4>
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-xs space-y-2.5 text-slate-700">
+                  <p><b>Gerekçelendirme:</b> {{ activeSubmission.aiEvaluation.teacherDiagnosis.whyThisScore }}</p>
+                  <p><b class="text-emerald-700">✓ Güçlü Bulunan Yerler:</b> {{ activeSubmission.aiEvaluation.teacherDiagnosis.strengths }}</p>
+                  <p><b class="text-rose-700">✕ Neden & Neresi Yanlış / Eksik:</b> {{ activeSubmission.aiEvaluation.teacherDiagnosis.weaknesses }}</p>
+                </div>
+              </div>
+
+              <!-- CRITERIA BREAKDOWN -->
+              <div v-if="activeSubmission.aiEvaluation?.criteriaBreakdown" class="space-y-2">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700">Rubrik Ölçüt Puanları (Değiştirilebilir)</h4>
+                <div class="space-y-2 max-h-56 overflow-y-auto pr-1">
+                  <div 
+                    v-for="crit in activeSubmission.aiEvaluation.criteriaBreakdown" 
+                    :key="crit.criterionId"
+                    class="p-2.5 rounded-xl border border-slate-100 bg-white shadow-xs text-xs space-y-1.5"
+                  >
+                    <div class="flex items-center justify-between">
+                      <span class="font-semibold text-slate-800">{{ crit.name }}</span>
+                      <div class="flex items-center space-x-1">
+                        <input 
+                          type="number"
+                          min="0"
+                          :max="crit.maxPoints"
+                          v-model.number="teacherReviewForm.criteriaScores[crit.criterionId]"
+                          @input="recalculateTotalFromCriteria"
+                          class="w-12 px-1.5 py-0.5 text-right font-bold border border-slate-300 rounded text-xs focus:ring-1 focus:ring-blue-500"
+                        >
+                        <span class="text-slate-400">/ {{ crit.maxPoints }}p</span>
+                      </div>
+                    </div>
+                    <p class="text-[11px] text-slate-500 italic">{{ crit.comment }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- STUDENT FEEDBACK DRAFT -->
+              <div class="space-y-1.5">
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">
+                  Öğrenciye Gidecek Geri Bildirim Metni
+                </label>
+                <textarea 
+                  rows="3"
+                  v-model="teacherReviewForm.studentFeedback"
+                  class="w-full text-xs p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  placeholder="Öğrenciye gösterilecek kişiselleştirilmiş açıklama..."
+                ></textarea>
+              </div>
+
+              <!-- TEACHER PRIVATE NOTES -->
+              <div class="space-y-1.5">
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">
+                  Öğretmen Özel Gözlem Notu
+                </label>
+                <input 
+                  type="text"
+                  v-model="teacherReviewForm.teacherNotes"
+                  placeholder="Örn: 2. ölçütte ek kanaat uygulandı..."
+                  class="w-full text-xs p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                >
+              </div>
+
+              <!-- APPROVE BUTTON -->
+              <div class="pt-2">
+                <button 
+                  @click="approveCurrentSubmission"
+                  class="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl font-bold text-sm shadow-md shadow-emerald-500/20 transition flex items-center justify-center space-x-2"
+                >
+                  <span>✅ Değerlendirmeyi Onayla ve Not Kütüğüne Ekle</span>
+                </button>
+                <p class="text-[10px] text-center text-slate-400 mt-1.5">
+                  Öğretmen onayı ile not resmiyet kazanır ve LMS sistemine işlenir.
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div v-else class="bg-white rounded-2xl border border-slate-200 p-12 text-center text-slate-400">
+          Bu öğrencinin seçilen sınav için teslim edilmiş bir yanıtı bulunmuyor.
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- ========================================================================= -->
+    <!-- MODAL: YAPAY ZEKAYI EĞİT / RUBRİK GİR EKRANI -->
+    <!-- ========================================================================= -->
+    <div v-if="showTrainAiModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-xs p-4 overflow-y-auto">
+      <div class="bg-white rounded-2xl max-w-3xl w-full p-6 shadow-2xl space-y-5 border border-slate-200 my-8">
+        
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+          <div>
+            <h3 class="text-base font-bold text-slate-900">🧠 Yapay Zekayı Eğit & Değerlendirme Rubriği Gir</h3>
+            <p class="text-xs text-slate-500 mt-0.5">Yapay zekanın bu sınavı nasıl analiz edeceğini, neleri arayacağını ve örnek yanıtları öğretin.</p>
+          </div>
+          <button @click="showTrainAiModal = false" class="text-slate-400 hover:text-slate-600 text-lg">✕</button>
+        </div>
+
+        <div class="space-y-4 max-h-[70vh] overflow-y-auto pr-2">
+          
+          <!-- Soru Metni & Puan -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Açık Uçlu Sınav / Ödev Sorusu</label>
+              <div class="flex items-center space-x-1">
+                <span class="text-xs text-slate-500 font-semibold">Maksimum Puan:</span>
+                <input 
+                  type="number" 
+                  v-model.number="trainAiForm.maxScore"
+                  class="w-16 p-1 border border-slate-300 rounded text-xs font-bold text-right"
+                >
+              </div>
+            </div>
+            <textarea 
+              rows="2"
+              v-model="trainAiForm.question"
+              class="w-full text-xs p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 font-medium"
+            ></textarea>
+          </div>
+
+          <!-- Yapay Zekaya Özel Eğitici Talimat (Prompt Guidance) -->
+          <div class="space-y-1">
+            <label class="block text-xs font-bold text-indigo-700 uppercase tracking-wider flex items-center space-x-1">
+              <span>🎯 Yapay Zekaya Özel Değerlendirme Talimatı</span>
+              <span class="text-[10px] font-normal text-slate-400">(Model bu kurala sıkı sıkıya uyar)</span>
+            </label>
+            <textarea 
+              rows="2"
+              v-model="trainAiForm.aiInstructions"
+              placeholder="Örn: 'Öğrenci farklı kelimelerle de ifade etse suyun fotolizi ile ATP üretimini doğru kabul et. Calvin döngüsü gece olur diyenleri kavram yanılgısı olarak işaretle ve nedenini bildir.'"
+              class="w-full text-xs p-2.5 border border-indigo-200 bg-indigo-50/30 rounded-xl focus:ring-2 focus:ring-indigo-500"
+            ></textarea>
+          </div>
+
+          <!-- Rubrik Ölçütleri -->
+          <div class="space-y-2 pt-2 border-t border-slate-100">
+            <div class="flex items-center justify-between">
+              <label class="text-xs font-bold text-slate-700 uppercase tracking-wider">1. Rubrik Ölçütleri & Puan Dağılımı</label>
+              <button @click="addCriterion" class="text-xs text-blue-600 font-bold hover:underline">+ Yeni Ölçüt Ekle</button>
+            </div>
+
+            <div v-for="(crit, idx) in trainAiForm.rubric" :key="crit.id || idx" class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-2 text-xs">
+              <div class="flex items-center justify-between gap-2">
+                <input 
+                  type="text"
+                  v-model="crit.title"
+                  placeholder="Ölçüt Başlığı (Örn: Fotoliz ve Klorofilin Rolü)"
+                  class="flex-1 p-1.5 border border-slate-300 rounded font-semibold text-xs"
+                >
+                <div class="flex items-center space-x-1">
+                  <input 
+                    type="number"
+                    v-model.number="crit.maxPoints"
+                    class="w-14 p-1.5 border border-slate-300 rounded font-bold text-right text-xs"
+                  >
+                  <span class="text-slate-400">Puan</span>
+                </div>
+                <button @click="removeCriterion(idx)" class="text-rose-500 hover:text-rose-700 p-1">✕</button>
+              </div>
+              <textarea 
+                rows="2"
+                v-model="crit.description"
+                placeholder="Ölçüt açıklaması: Öğrencinin neyi açıklaması bekleniyor?"
+                class="w-full p-1.5 border border-slate-300 rounded text-xs"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Zorunlu / Beklenen Cümleler (Paraphrase Rules) -->
+          <div class="space-y-2 pt-2 border-t border-slate-100">
+            <div class="flex items-center justify-between">
+              <div>
+                <label class="text-xs font-bold text-slate-700 uppercase tracking-wider">2. Kesinlikle Yazılması Gereken Cümleler / Anlamlar</label>
+                <p class="text-[11px] text-slate-400">Öğrenci farklı kelimelerle de ifade etse aynı anlama çıkıyorsa yapay zeka kabul eder.</p>
+              </div>
+              <button @click="addMandatoryConcept" class="text-xs text-indigo-600 font-bold hover:underline">+ Anlam Öbeği Ekle</button>
+            </div>
+
+            <div v-for="(m, mIdx) in trainAiForm.mandatoryConcepts" :key="m.id || mIdx" class="p-3 bg-indigo-50/40 rounded-xl border border-indigo-200 space-y-1 text-xs">
+              <div class="flex items-center justify-between gap-2">
+                <input 
+                  type="text"
+                  v-model="m.concept"
+                  placeholder="Örn: ATP ve NADPH ışık reaksiyonlarında üretilip Calvin döngüsüne aktarılır"
+                  class="flex-1 p-1.5 border border-slate-300 rounded font-medium text-xs bg-white"
+                >
+                <button @click="removeMandatoryConcept(mIdx)" class="text-rose-500 hover:text-rose-700 p-1">✕</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Örnek Değerlendirmeler (Few-Shot Training Examples) -->
+          <div class="space-y-2 pt-2 border-t border-slate-100">
+            <div class="flex items-center justify-between">
+              <div>
+                <label class="text-xs font-bold text-slate-700 uppercase tracking-wider">3. Örnek Değerlendirmeler (Few-Shot Referans Verisi)</label>
+                <p class="text-[11px] text-slate-400">Yapay zekanın tutarlı olması için örnek tam puan ve hatalı yanıtlar yükleyin.</p>
+              </div>
+              <button @click="addReferenceExemplar" class="text-xs text-emerald-600 font-bold hover:underline">+ Örnek Ekle</button>
+            </div>
+
+            <div v-for="(ref, rIdx) in trainAiForm.referenceExemplars" :key="ref.id || rIdx" class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-2 text-xs">
+              <div class="flex items-center justify-between">
+                <input 
+                  type="text"
+                  v-model="ref.type"
+                  placeholder="Örn: Tam Puan Alan Yanıt / Tipik Yanılgı"
+                  class="w-1/2 p-1.5 border border-slate-300 rounded font-semibold text-xs"
+                >
+                <div class="flex items-center space-x-1">
+                  <span class="text-slate-500">Puan:</span>
+                  <input 
+                    type="number"
+                    v-model.number="ref.score"
+                    class="w-14 p-1 border border-slate-300 rounded font-bold text-right text-xs"
+                  >
+                </div>
+                <button @click="removeReferenceExemplar(rIdx)" class="text-rose-500 hover:text-rose-700 p-1">✕</button>
+              </div>
+              <textarea 
+                rows="2"
+                v-model="ref.studentText"
+                placeholder="Örnek öğrenci cevabı metni..."
+                class="w-full p-1.5 border border-slate-300 rounded text-xs"
+              ></textarea>
+              <input 
+                type="text"
+                v-model="ref.teacherComment"
+                placeholder="Öğretmenin değerlendirme notu (Neden bu puan verildi?)..."
+                class="w-full p-1.5 border border-slate-300 rounded text-xs text-slate-600 italic"
+              >
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Submit Training Button -->
+        <div class="flex items-center justify-between pt-3 border-t border-slate-100">
+          <span class="text-xs text-slate-400">
+            Kaydedildiğinde ilgili tüm sınavlar otomatik bu yeni ölçütlerle analiz edilir.
+          </span>
+          <div class="flex items-center space-x-2">
+            <button 
+              @click="showTrainAiModal = false"
+              class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg"
+            >
+              Vazgeç
+            </button>
+            <button 
+              @click="submitTrainAi"
+              :disabled="isTrainingAi"
+              class="px-5 py-2.5 text-xs font-bold bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white rounded-xl shadow-md shadow-indigo-500/20 transition flex items-center space-x-1.5"
+            >
+              <span>{{ isTrainingAi ? 'Yapay Zeka Eğitiliyor...' : '🧠 Yapay Zekayı Eğit & Sınavları Yeniden Analiz Et' }}</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- MODAL: SETTINGS & GEMINI API KEY -->
+    <!-- ========================================================================= -->
+    <div v-if="showSettingsModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-xs p-4">
+      <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-slate-200">
+        <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+          <h3 class="text-base font-bold text-slate-900">⚙️ Yapay Zeka & API Ayarları</h3>
+          <button @click="showSettingsModal = false" class="text-slate-400 hover:text-slate-600 text-lg">✕</button>
+        </div>
+
+        <div class="space-y-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Google Gemini API Anahtarı</label>
+            <input 
+              type="password" 
+              v-model="newApiKeyInput"
+              :placeholder="settings.hasApiKey ? 'Kayıtlı: ' + settings.maskedKey : 'AIzaSy... API anahtarı girin'"
+              class="w-full text-xs p-2.5 border border-slate-300 rounded-lg font-mono"
+            >
+            <p class="text-[11px] text-slate-400 mt-1">
+              Boş bırakıldığında yerel Türkçe anlamsal NLP analiz motoru çalışır.
+            </p>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Model Tercihi</label>
+            <select v-model="settings.modelName" class="w-full text-xs p-2 border border-slate-300 rounded-lg">
+              <option value="gemini-2.5-flash">Gemini 2.5 Flash (Önerilen - Hızlı ve Yüksek İsabet)</option>
+              <option value="gemini-1.5-pro">Gemini 1.5 Pro (Derin Akademik Muhakeme)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end space-x-2 pt-3 border-t border-slate-100">
+          <button 
+            @click="showSettingsModal = false"
+            class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg"
+          >
+            Vazgeç
+          </button>
+          <button 
+            @click="saveSettings"
+            class="px-4 py-2 text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-xs"
+          >
+            Kaydet
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 py-4 mt-auto">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-2">
+        <div>
+          <b>AkordEval</b> — Öğretmen Kontrollü, Kanıt Odaklı Açık Uçlu Sınav Değerlendirme Sistemi
+        </div>
+        <div>
+          Öğretmen onaylamadan öğrenci not dökümüne hiçbir puan eklenmez.
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Main Vue App Script -->
+  <script src="app.js"></script>
+</body>
+</html>
