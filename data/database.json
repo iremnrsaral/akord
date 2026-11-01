@@ -15,7 +15,11 @@
       "department": "Moleküler Biyoloji ve Biyomühendislik",
       "gradeLevel": "3. Sınıf",
       "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80",
-      "enrolledCourseIds": ["course-bio", "course-ceng", "course-chem"]
+      "enrolledCourseIds": [
+        "course-bio",
+        "course-ceng",
+        "course-chem"
+      ]
     },
     {
       "id": "std-zeynep",
@@ -25,7 +29,10 @@
       "department": "Biyomühendislik",
       "gradeLevel": "3. Sınıf",
       "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&auto=format&fit=crop&q=80",
-      "enrolledCourseIds": ["course-bio", "course-chem"]
+      "enrolledCourseIds": [
+        "course-bio",
+        "course-chem"
+      ]
     },
     {
       "id": "std-burak",
@@ -35,7 +42,10 @@
       "department": "Moleküler Biyoloji",
       "gradeLevel": "2. Sınıf",
       "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
-      "enrolledCourseIds": ["course-bio", "course-ceng"]
+      "enrolledCourseIds": [
+        "course-bio",
+        "course-ceng"
+      ]
     },
     {
       "id": "std-elif",
@@ -45,7 +55,9 @@
       "department": "Biyomühendislik",
       "gradeLevel": "3. Sınıf",
       "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
-      "enrolledCourseIds": ["course-bio"]
+      "enrolledCourseIds": [
+        "course-bio"
+      ]
     },
     {
       "id": "std-mert",
@@ -55,7 +67,10 @@
       "department": "Bilgisayar Mühendisliği",
       "gradeLevel": "2. Sınıf",
       "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
-      "enrolledCourseIds": ["course-ceng", "course-bio"]
+      "enrolledCourseIds": [
+        "course-ceng",
+        "course-bio"
+      ]
     }
   ],
   "courses": [
@@ -128,19 +143,44 @@
           "id": "m-b1",
           "concept": "ATP ve NADPH ışık reaksiyonlarında üretilip Calvin döngüsüne aktarılır",
           "importance": "Kritik",
-          "semanticKeywords": ["atp", "nadph", "ışık", "calvin", "aktarılır", "üretilir", "enerji", "taşıyıcı", "stroma"]
+          "semanticKeywords": [
+            "atp",
+            "nadph",
+            "ışık",
+            "calvin",
+            "aktarılır",
+            "üretilir",
+            "enerji",
+            "taşıyıcı",
+            "stroma"
+          ]
         },
         {
           "id": "m-b2",
           "concept": "Calvin döngüsünde CO2 fiksasyonu ile glikoz/organik besin sentezlenir",
           "importance": "Kritik",
-          "semanticKeywords": ["co2", "karbondioksit", "fiksasyon", "glikoz", "şeker", "besin", "sentez"]
+          "semanticKeywords": [
+            "co2",
+            "karbondioksit",
+            "fiksasyon",
+            "glikoz",
+            "şeker",
+            "besin",
+            "sentez"
+          ]
         },
         {
           "id": "m-b3",
           "concept": "Suyun fotolizi ile oksijen ve elektron açığa çıkar",
           "importance": "Önemli",
-          "semanticKeywords": ["fotoliz", "su", "h2o", "parçalanma", "oksijen", "o2"]
+          "semanticKeywords": [
+            "fotoliz",
+            "su",
+            "h2o",
+            "parçalanma",
+            "oksijen",
+            "o2"
+          ]
         }
       ],
       "referenceExemplars": [
@@ -188,7 +228,14 @@
           "id": "m-bo1",
           "concept": "Proton gradiyenti tilakoit lümen ile zarlar arası boşlukta zıt yönlü birikir",
           "importance": "Kritik",
-          "semanticKeywords": ["lümen", "zarlar arası", "gradiyent", "kemiozmozis", "stroma", "matriks"]
+          "semanticKeywords": [
+            "lümen",
+            "zarlar arası",
+            "gradiyent",
+            "kemiozmozis",
+            "stroma",
+            "matriks"
+          ]
         }
       ],
       "referenceExemplars": []
@@ -227,7 +274,15 @@
           "id": "m-c1",
           "concept": "Overloading compile-time, Overriding run-time polimorfizmdir",
           "importance": "Kritik",
-          "semanticKeywords": ["overload", "override", "compile-time", "run-time", "late binding", "statik", "dinamik"]
+          "semanticKeywords": [
+            "overload",
+            "override",
+            "compile-time",
+            "run-time",
+            "late binding",
+            "statik",
+            "dinamik"
+          ]
         }
       ],
       "referenceExemplars": []
@@ -268,7 +323,7 @@
       "status": "draft_ai",
       "studentText": "Fotosentez sürecinde tilakoit membranlardaki klorofil pigmentleri foton enerjisini soğurarak elektronları uyarır. Bu sırada su molekülleri fotoliz reaksiyonuyla ayrışır; ortama serbest oksijen (O2) bırakılırken açığa çıkan elektronlar ETS üzerinden aktarılır. Bu basamaklarda kemiozmotik gradiyent sayesinde ATP fosforile edilir ve NADP+ koenzimi indirgenerek yüksek enerjili NADPH molekülüne dönüşür. Oluşan bu iki temel kimyasal enerji taşıyıcısı kloroplastın stroma sıvısına geçerek Calvin döngüsünün yakıtı olur. Stromada Rubisco enzimi yardımıyla karbondioksit fiksasyonu gerçekleştirilir; ATP ve NADPH'ın indirgeme gücüyle fosfogliserat molekülleri glikoza ve diğer organik şekerlere dönüştürülür. Döngü tamamlandığında enerjisini bırakan ADP molekülleri ile yükseltgenmiş NADP+ koenzimleri, yeniden şarj edilmek üzere ışığa bağımlı reaksiyonlara geri döner.",
       "aiEvaluation": {
-        "suggestedScore": 96,
+        "suggestedScore": 100,
         "criteriaBreakdown": [
           {
             "criterionId": "crit-b1",
@@ -276,7 +331,7 @@
             "assignedPoints": 25,
             "maxPoints": 25,
             "status": "met",
-            "comment": "Foton soğurma, fotoliz, oksijen salınımı ve elektron akışı kusursuz ifade edilmiş."
+            "comment": "Öğretmenin aradığı temel kavramlar ve nedensellik bağı eksiksiz aktarılmış."
           },
           {
             "criterionId": "crit-b2",
@@ -284,78 +339,72 @@
             "assignedPoints": 35,
             "maxPoints": 35,
             "status": "met",
-            "comment": "ATP fosforilasyonu ve NADP+ indirgenmesi terimleri yerinde ve tam doğru."
+            "comment": "Öğretmenin aradığı temel kavramlar ve nedensellik bağı eksiksiz aktarılmış."
           },
           {
             "criterionId": "crit-b3",
             "name": "Calvin Döngüsünde Karbon Fiksasyonu & Şeker Sentezi",
-            "assignedPoints": 23,
+            "assignedPoints": 25,
             "maxPoints": 25,
-            "status": "mostly_met",
-            "comment": "Stromada CO2 fiksasyonu ve glikoz üretimi doğru açıklanmış; ara ürün PGAL detayı zımnen verilmiş."
+            "status": "met",
+            "comment": "Öğretmenin aradığı temel kavramlar ve nedensellik bağı eksiksiz aktarılmış."
           },
           {
             "criterionId": "crit-b4",
             "name": "Moleküler Geri Besleme (ADP ve NADP+ Geri Dönüşümü)",
-            "assignedPoints": 13,
+            "assignedPoints": 15,
             "maxPoints": 15,
-            "status": "mostly_met",
-            "comment": "ADP ve yükseltgenmiş NADP+'nin geri dönüşü belirtilmiş; inorganik fosfat (Pi) döngüsü kısmen atlanmış."
+            "status": "met",
+            "comment": "Öğretmenin aradığı temel kavramlar ve nedensellik bağı eksiksiz aktarılmış."
           }
         ],
         "mandatoryConceptsAnalysis": [
           {
             "concept": "ATP ve NADPH ışık reaksiyonlarında üretilip Calvin döngüsüne aktarılır",
             "status": "tam_eslesme",
-            "explanation": "Öğrenci farklı ve akademik cümle yapısıyla ('Oluşan bu iki temel kimyasal enerji taşıyıcısı kloroplastın stroma sıvısına geçerek Calvin döngüsünün yakıtı olur') öğretmenin aradığı anlamı eksiksiz karşılamıştır (Paraphrase kabul edildi).",
-            "detectedSentence": "Oluşan bu iki temel kimyasal enerji taşıyıcısı kloroplastın stroma sıvısına geçerek Calvin döngüsünün yakıtı olur."
+            "explanation": "Öğretmenin zorunlu tuttuğu anlam öbeği, öğrenci tarafından farklı kelimelerle de olsa anlamsal olarak tam karşılandı (Paraphrase doğrulandı).",
+            "detectedSentence": "Bu basamaklarda kemiozmotik gradiyent sayesinde ATP fosforile edilir ve NADP+ koenzimi indirgenerek yüksek enerjili NADPH molekülüne dönüşür."
           },
           {
             "concept": "Calvin döngüsünde CO2 fiksasyonu ile glikoz/organik besin sentezlenir",
             "status": "tam_eslesme",
-            "explanation": "CO2 fiksasyonu ve glikoz dönüşümü doğrudan ifade edilmiştir.",
+            "explanation": "Öğretmenin zorunlu tuttuğu anlam öbeği, öğrenci tarafından farklı kelimelerle de olsa anlamsal olarak tam karşılandı (Paraphrase doğrulandı).",
             "detectedSentence": "Stromada Rubisco enzimi yardımıyla karbondioksit fiksasyonu gerçekleştirilir; ATP ve NADPH'ın indirgeme gücüyle fosfogliserat molekülleri glikoza ve diğer organik şekerlere dönüştürülür."
           },
           {
             "concept": "Suyun fotolizi ile oksijen ve elektron açığa çıkar",
             "status": "tam_eslesme",
-            "explanation": "Fotoliz ve O2 salınımı tam açıklanmış.",
+            "explanation": "Öğretmenin zorunlu tuttuğu anlam öbeği, öğrenci tarafından farklı kelimelerle de olsa anlamsal olarak tam karşılandı (Paraphrase doğrulandı).",
             "detectedSentence": "Bu sırada su molekülleri fotoliz reaksiyonuyla ayrışır; ortama serbest oksijen (O2) bırakılırken açığa çıkan elektronlar ETS üzerinden aktarılır."
           }
         ],
         "evidenceHighlights": [
           {
-            "text": "Fotosentez sürecinde tilakoit membranlardaki klorofil pigmentleri foton enerjisini soğurarak elektronları uyarır. Bu sırada su molekülleri fotoliz reaksiyonuyla ayrışır; ortama serbest oksijen (O2) bırakılırken açığa çıkan elektronlar ETS üzerinden aktarılır.",
+            "text": "Bu sırada su molekülleri fotoliz reaksiyonuyla ayrışır; ortama serbest oksijen (O2) bırakılırken açığa çıkan elektronlar ETS üzerinden aktarılır.",
             "type": "success",
-            "tag": "Ölçüt 1 (25/25): Fotoliz & Klorofil",
-            "note": "Öğretmenin rubriğindeki ilk basamak tam karşılandı."
+            "tag": "Ölçüt: Klorofilin Rolü ve Suyun... (25/25p)",
+            "note": "Öğretmenin aradığı temel kavramlar ve nedensellik bağı eksiksiz aktarılmış."
           },
           {
-            "text": "Bu basamaklarda kemiozmotik gradiyent sayesinde ATP fosforile edilir ve NADP+ koenzimi indirgenerek yüksek enerjili NADPH molekülüne dönüşür. Oluşan bu iki temel kimyasal enerji taşıyıcısı kloroplastın stroma sıvısına geçerek Calvin döngüsünün yakıtı olur.",
+            "text": "Bu basamaklarda kemiozmotik gradiyent sayesinde ATP fosforile edilir ve NADP+ koenzimi indirgenerek yüksek enerjili NADPH molekülüne dönüşür.",
             "type": "success",
-            "tag": "Ölçüt 2 (35/35): Enerji Taşıyıcıları (ATP/NADPH)",
-            "note": "Zorunlu anlam kriteri farklı kelimelerle akademik ve kusursuz kurulmuş."
+            "tag": "Ölçüt: Ara Enerji Taşıyıcıların... (35/35p)",
+            "note": "Öğretmenin aradığı temel kavramlar ve nedensellik bağı eksiksiz aktarılmış."
           },
           {
             "text": "Stromada Rubisco enzimi yardımıyla karbondioksit fiksasyonu gerçekleştirilir; ATP ve NADPH'ın indirgeme gücüyle fosfogliserat molekülleri glikoza ve diğer organik şekerlere dönüştürülür.",
             "type": "success",
-            "tag": "Ölçüt 3 (23/25): Karbon Fiksasyonu",
-            "note": "Rubisco enzimine kadar değinilmiş yüksek kaliteli açıklama."
-          },
-          {
-            "text": "Döngü tamamlandığında enerjisini bırakan ADP molekülleri ile yükseltgenmiş NADP+ koenzimleri, yeniden şarj edilmek üzere ışığa bağımlı reaksiyonlara geri döner.",
-            "type": "success",
-            "tag": "Ölçüt 4 (13/15): Moleküler Döngü",
-            "note": "Geri dönüşüm mekanizması doğru açıklanmış."
+            "tag": "Ölçüt: Calvin Döngüsünde Karbon... (25/25p)",
+            "note": "Öğretmenin aradığı temel kavramlar ve nedensellik bağı eksiksiz aktarılmış."
           }
         ],
         "teacherDiagnosis": {
-          "whyThisScore": "İrem Nur Saral, öğretmenin belirlediği 4 rubrik ölçütünü ve 3 zorunlu anlam öbeğini üstün bir akademik dille kavramıştır. Ezber ifadeler yerine biyokimyasal terimleri yerinde kullanarak kendi cümleleriyle tam anlamı oluşturmuştur.",
-          "strengths": "Rubisco enzimi, kemiozmotik gradiyent ve indirgenme/yükseltgenme terminolojisi çok güçlü.",
-          "weaknesses": "Ciddi bir eksiklik yok; inorganik fosfat (Pi) serbest kalması detayı eklenebilirdi.",
-          "verdict": "Yüksek başarı örneği. 96 puan onaylanması tavsiye edilir."
+          "whyThisScore": "Öğrenci yanıtı öğretmenin belirlediği 4 rubrik ölçütüne ve 3 zorunlu anlamsal kavrama göre analiz edilmiştir. Toplam 100 puan hesaplanmıştır.",
+          "strengths": "Öğrenci öğretmenin rubriğindeki ölçütleri kavramış ve kendi cümleleriyle akademik tutarlılıkta ifade etmiştir.",
+          "weaknesses": "Ciddi bir kavramsal boşluk bulunmamaktadır.",
+          "verdict": "Yüksek başarı örneği. Öğretmen onayı için tavsiye edilir."
         },
-        "studentFeedbackDraft": "Harika bir sınav kağıdı İrem Nur! Işık reaksiyonları ile Calvin döngüsü arasındaki elektron-enerji transferini, Rubisco enzimi ve kemiozmotik fosforilasyonu son derece yetkin bir dille açıklamışsın. Tebrikler!"
+        "studentFeedbackDraft": "Tebrikler! Açık uçlu soruda istenen biyokimyasal mekanizmayı ve nedensellik ilişkisini kendi cümlelerinle çok başarılı bir şekilde kurdun."
       },
       "teacherReview": {
         "isApproved": false,
@@ -517,94 +566,88 @@
       "status": "draft_ai",
       "studentText": "Klorofil ışığı soğurarak kloroplastta enerji üretir ve su parçalanıp oksijen dışarı atılır. Bu sırada hücre ATP üretir. Üretilen ATP daha sonra karanlık evreye yollanır ve orada karbondioksit ile birleşerek bitkinin beslenmesi için glikoz meydana gelir. Sonrasında ATP harcandığı için ADP'ye dönüşür.",
       "aiEvaluation": {
-        "suggestedScore": 65,
+        "suggestedScore": 79,
         "criteriaBreakdown": [
           {
             "criterionId": "crit-b1",
             "name": "Klorofilin Rolü ve Suyun Fotolizi",
-            "assignedPoints": 22,
+            "assignedPoints": 18,
             "maxPoints": 25,
             "status": "mostly_met",
-            "comment": "Işık soğurma ve su parçalanması doğru ancak tilakoit membran belirtilmemiş."
+            "comment": "Ölçütün ana unsurları mevcut fakat bazı ara basamaklar veya teknik detaylar yüzeysel kalmış."
           },
           {
             "criterionId": "crit-b2",
             "name": "Ara Enerji Taşıyıcılarının Sentezi (ATP ve NADPH)",
-            "assignedPoints": 18,
+            "assignedPoints": 25,
             "maxPoints": 35,
-            "status": "partial",
-            "comment": "ATP belirtilmiş ancak kritik ara taşıyıcı olan NADPH molekülü tamamen unutulmuş! 17 puan kırıldı."
+            "status": "mostly_met",
+            "comment": "Ölçütün ana unsurları mevcut fakat bazı ara basamaklar veya teknik detaylar yüzeysel kalmış."
           },
           {
             "criterionId": "crit-b3",
             "name": "Calvin Döngüsünde Karbon Fiksasyonu & Şeker Sentezi",
-            "assignedPoints": 18,
+            "assignedPoints": 25,
             "maxPoints": 25,
-            "status": "mostly_met",
-            "comment": "Karbondioksit ve glikoz ilişkisi var ancak mekanizma yüzeysel."
+            "status": "met",
+            "comment": "Öğretmenin aradığı temel kavramlar ve nedensellik bağı eksiksiz aktarılmış."
           },
           {
             "criterionId": "crit-b4",
             "name": "Moleküler Geri Besleme (ADP ve NADP+ Geri Dönüşümü)",
-            "assignedPoints": 7,
+            "assignedPoints": 11,
             "maxPoints": 15,
-            "status": "partial",
-            "comment": "ADP yazılmış ancak NADP+ yükseltgenmesi ve geri dönüşü yazılmamış."
+            "status": "mostly_met",
+            "comment": "Ölçütün ana unsurları mevcut fakat bazı ara basamaklar veya teknik detaylar yüzeysel kalmış."
           }
         ],
         "mandatoryConceptsAnalysis": [
           {
             "concept": "ATP ve NADPH ışık reaksiyonlarında üretilip Calvin döngüsüne aktarılır",
-            "status": "kismen_eslesme",
-            "explanation": "Öğrenci ATP'yi aktardı fakat öğretmen rubriğinde zorunlu tutulan NADPH koenzimini hiç anmadı.",
-            "detectedSentence": "Bu sırada hücre ATP üretir. Üretilen ATP daha sonra karanlık evreye yollanır..."
+            "status": "eslesmedi",
+            "explanation": "Öğretmenin mutlaka yazılmasını istediği bu temel kavram öğrenci metninde bulunamadı.",
+            "detectedSentence": null
           },
           {
             "concept": "Calvin döngüsünde CO2 fiksasyonu ile glikoz/organik besin sentezlenir",
-            "status": "tam_eslesme",
-            "explanation": "Glikoz ve karbondioksit fiksasyonu mevcut.",
-            "detectedSentence": "orada karbondioksit ile birleşerek bitkinin beslenmesi için glikoz meydana gelir."
+            "status": "kismen_eslesme",
+            "explanation": "Kavramın bir kısmı ifade edilmiş fakat bazı kritik ara öğeler eksik aktarılmış.",
+            "detectedSentence": "Üretilen ATP daha sonra karanlık evreye yollanır ve orada karbondioksit ile birleşerek bitkinin beslenmesi için glikoz meydana gelir."
           },
           {
             "concept": "Suyun fotolizi ile oksijen ve elektron açığa çıkar",
-            "status": "tam_eslesme",
-            "explanation": "Su parçalanması ve oksijen çıkışı ifade edilmiş.",
-            "detectedSentence": "su parçalanıp oksijen dışarı atılır."
+            "status": "kismen_eslesme",
+            "explanation": "Kavramın bir kısmı ifade edilmiş fakat bazı kritik ara öğeler eksik aktarılmış.",
+            "detectedSentence": "Klorofil ışığı soğurarak kloroplastta enerji üretir ve su parçalanıp oksijen dışarı atılır."
           }
         ],
         "evidenceHighlights": [
           {
             "text": "Klorofil ışığı soğurarak kloroplastta enerji üretir ve su parçalanıp oksijen dışarı atılır.",
-            "type": "success",
-            "tag": "Ölçüt 1 (22/25): Fotoliz Doğru",
-            "note": "Suyun parçalanması ve O2 salınımı doğru aktarılmış."
-          },
-          {
-            "text": "Bu sırada hücre ATP üretir. Üretilen ATP daha sonra karanlık evreye yollanır",
             "type": "warning",
-            "tag": "Ölçüt 2 (18/35): KRİTİK EKSİK!",
-            "note": "NADPH koenzimi tamamen unutulmuş. Öğretmenin zorunlu kıldığı ara taşıyıcı eksik olduğu için puan kırıldı."
+            "tag": "Ölçüt: Klorofilin Rolü ve Suyun... (18/25p)",
+            "note": "Ölçütün ana unsurları mevcut fakat bazı ara basamaklar veya teknik detaylar yüzeysel kalmış."
           },
           {
-            "text": "ve orada karbondioksit ile birleşerek bitkinin beslenmesi için glikoz meydana gelir.",
+            "text": "Üretilen ATP daha sonra karanlık evreye yollanır ve orada karbondioksit ile birleşerek bitkinin beslenmesi için glikoz meydana gelir.",
             "type": "success",
-            "tag": "Ölçüt 3 (18/25): Glikoz Sentezi",
-            "note": "Karbon bağlanması yerinde."
+            "tag": "Ölçüt: Calvin Döngüsünde Karbon... (25/25p)",
+            "note": "Öğretmenin aradığı temel kavramlar ve nedensellik bağı eksiksiz aktarılmış."
           },
           {
             "text": "Sonrasında ATP harcandığı için ADP'ye dönüşür.",
             "type": "warning",
-            "tag": "Ölçüt 4 (7/15): NADP+ Döngüsü Yok",
-            "note": "NADP+ koenziminin döngüsü yazılmamış."
+            "tag": "Ölçüt: Moleküler Geri Besleme (... (11/15p)",
+            "note": "Ölçütün ana unsurları mevcut fakat bazı ara basamaklar veya teknik detaylar yüzeysel kalmış."
           }
         ],
         "teacherDiagnosis": {
-          "whyThisScore": "Burak genel süreci kavramış görünse de rubrikte 35 puan değerindeki Kriter 2'nin yarısını oluşturan NADPH molekülünü tamamen atlamıştır. Bu nedenle 65 puan hesaplanmıştır.",
-          "strengths": "ATP'nin karanlık evrede harcanıp ADP'ye dönüştüğünü biliyor.",
-          "weaknesses": "NADPH hidrojen taşıyıcısını hiç yazmamış. 'Karanlık evre' tabirini kullanmış.",
-          "verdict": "Öğretmen incelemesi önerilir. Puan öğretmenin takdirine göre 65-70 arası onaylanabilir."
+          "whyThisScore": "Öğrenci yanıtı öğretmenin belirlediği 4 rubrik ölçütüne ve 3 zorunlu anlamsal kavrama göre analiz edilmiştir. Toplam 79 puan hesaplanmıştır.",
+          "strengths": "Konunun temel mekanizması genel hatlarıyla bilinmektedir.",
+          "weaknesses": "Öğretmenin rubrikte belirttiği bazı kritik ara ürünler veya döngüsel aşamalar atlanmış.",
+          "verdict": "Kısmi puan önerildi. Öğretmenin eksikleri inceleyip notu teyit etmesi önerilir."
         },
-        "studentFeedbackDraft": "Burak, fotosentezin ana hatlarını doğru kurmuşsun. Ancak en kritik indirgeyici güç olan NADPH koenzimini ve onun Calvin döngüsündeki rolünü belirtmeyi unutmuşsun. Bu konuyu tekrar gözden geçirmelisin."
+        "studentFeedbackDraft": "Tebrikler! Açık uçlu soruda istenen biyokimyasal mekanizmayı ve nedensellik ilişkisini kendi cümlelerinle çok başarılı bir şekilde kurdun."
       },
       "teacherReview": {
         "isApproved": false,
@@ -622,82 +665,88 @@
       "status": "draft_ai",
       "studentText": "Fotosentez ikiye ayrılır: Gündüz olan ışık reaksiyonu ve gece olan karanlık evre. Gündüz bitki klorofil ile güneş ışığını hapseder ve havaya oksijen bırakır. Gece olunca da fotosentezin ikinci aşaması başlar, burada güneş ışığı olmadığı için depolanan karbondioksit kullanılarak şeker üretilir. Bu sayede bitki gece gündüz çalışır.",
       "aiEvaluation": {
-        "suggestedScore": 38,
+        "suggestedScore": 43,
         "criteriaBreakdown": [
           {
             "criterionId": "crit-b1",
             "name": "Klorofilin Rolü ve Suyun Fotolizi",
-            "assignedPoints": 16,
+            "assignedPoints": 10,
             "maxPoints": 25,
             "status": "partial",
-            "comment": "Işık hapsetme ve oksijen var; fotoliz ve ETS yok."
+            "comment": "Öğrenci 'Calvin döngüsü gece gerçekleşir' yanılgısına kapılmış; temel basamak puanı kırıldı."
           },
           {
             "criterionId": "crit-b2",
             "name": "Ara Enerji Taşıyıcılarının Sentezi (ATP ve NADPH)",
-            "assignedPoints": 4,
+            "assignedPoints": 12,
             "maxPoints": 35,
-            "status": "unmet",
-            "comment": "ATP veya NADPH kelimesi dahi geçmiyor! Ciddi kavramsal boşluk."
+            "status": "partial",
+            "comment": "Ölçüte yüzeysel bir değinme var; yeterli derinlik ve açıklama sunulmamış."
           },
           {
             "criterionId": "crit-b3",
             "name": "Calvin Döngüsünde Karbon Fiksasyonu & Şeker Sentezi",
-            "assignedPoints": 12,
+            "assignedPoints": 10,
             "maxPoints": 25,
             "status": "partial",
-            "comment": "Karbondioksitten şeker üretimi doğru fakat gece gerçekleştiği iddiası ciddi bir kavram yanılgısıdır."
+            "comment": "Öğrenci 'Calvin döngüsü gece gerçekleşir' yanılgısına kapılmış; temel basamak puanı kırıldı."
           },
           {
             "criterionId": "crit-b4",
             "name": "Moleküler Geri Besleme (ADP ve NADP+ Geri Dönüşümü)",
-            "assignedPoints": 6,
+            "assignedPoints": 11,
             "maxPoints": 15,
-            "status": "unmet",
-            "comment": "Geri dönüşüm ve döngüsel koenzimler tamamen yok."
+            "status": "mostly_met",
+            "comment": "Ölçütün ana unsurları mevcut fakat bazı ara basamaklar veya teknik detaylar yüzeysel kalmış."
           }
         ],
         "mandatoryConceptsAnalysis": [
           {
             "concept": "ATP ve NADPH ışık reaksiyonlarında üretilip Calvin döngüsüne aktarılır",
             "status": "eslesmedi",
-            "explanation": "Öğrenci ne ATP'den ne de NADPH'tan bahsetmiştir.",
+            "explanation": "Öğretmenin mutlaka yazılmasını istediği bu temel kavram öğrenci metninde bulunamadı.",
             "detectedSentence": null
           },
           {
             "concept": "Calvin döngüsünde CO2 fiksasyonu ile glikoz/organik besin sentezlenir",
             "status": "tam_eslesme",
-            "explanation": "Karbondioksit ve şeker sentezi eşleşiyor ancak yanılgıyla birlikte.",
-            "detectedSentence": "burada güneş ışığı olmadığı için depolanan karbondioksit kullanılarak şeker üretilir."
+            "explanation": "Öğretmenin zorunlu tuttuğu anlam öbeği, öğrenci tarafından farklı kelimelerle de olsa anlamsal olarak tam karşılandı (Paraphrase doğrulandı).",
+            "detectedSentence": "Gece olunca da fotosentezin ikinci aşaması başlar, burada güneş ışığı olmadığı için depolanan karbondioksit kullanılarak şeker üretilir."
           },
           {
             "concept": "Suyun fotolizi ile oksijen ve elektron açığa çıkar",
-            "status": "kismen_eslesme",
-            "explanation": "Oksijen bırakma var ancak suyun fotolizi yok.",
-            "detectedSentence": "havaya oksijen bırakır."
+            "status": "eslesmedi",
+            "explanation": "Öğretmenin mutlaka yazılmasını istediği bu temel kavram öğrenci metninde bulunamadı.",
+            "detectedSentence": null
           }
         ],
         "evidenceHighlights": [
           {
-            "text": "Fotosentez ikiye ayrılır: Gündüz olan ışık reaksiyonu ve gece olan karanlık evre.",
+            "text": "Gündüz bitki klorofil ile güneş ışığını hapseder ve havaya oksijen bırakır.",
             "type": "error",
-            "tag": "Kritik Kavram Yanılgısı!",
-            "note": "Calvin döngüsü (karanlık evre) gece gerçekleşmez! Işık reaksiyonunun ürünleri (ATP/NADPH) depolanamadığı için gündüz eşzamanlı yürür."
+            "tag": "Ölçüt: Klorofilin Rolü ve Suyun... (10/25p)",
+            "note": "Calvin döngüsü gece olmaz; ışık reaksiyonu ürünleri olmadan çalışamaz."
+          },
+          {
+            "text": "Fotosentez ikiye ayrılır: Gündüz olan ışık reaksiyonu ve gece olan karanlık evre.",
+            "type": "warning",
+            "tag": "Ölçüt: Ara Enerji Taşıyıcıların... (12/35p)",
+            "note": "Ölçüte yüzeysel bir değinme var; yeterli derinlik ve açıklama sunulmamış."
           },
           {
             "text": "Gece olunca da fotosentezin ikinci aşaması başlar, burada güneş ışığı olmadığı için depolanan karbondioksit kullanılarak şeker üretilir.",
             "type": "error",
-            "tag": "Hatalı Bilimsel Çıkarım",
-            "note": "Yapay zekanın öğretmene notu: Öğrenci ortaöğretimdeki yaygın 'karanlık evre gece olur' yanılgısına kapılmış."
+            "tag": "Ölçüt: Calvin Döngüsünde Karbon... (10/25p)",
+            "note": "Calvin döngüsü gece olmaz; ışık reaksiyonu ürünleri olmadan çalışamaz."
           }
         ],
         "teacherDiagnosis": {
-          "whyThisScore": "Öğrencinin yanıtında biyolojide çok yaygın olan 'Calvin döngüsünün gece yapıldığı' yanılgısı baskındır. Ayrıca rubrikte en yüksek puana sahip ATP ve NADPH enerji ara ürünleri metinde hiç yer almamıştır.",
-          "strengths": "Oksijen çıkışını ve CO2'den şeker yapıldığını biliyor.",
-          "weaknesses": "Gece karanlık evre yanılgısı ve moleküler düzeydeki enerji taşıyıcılarının yokluğu.",
-          "verdict": "Düşük puan (38) önerildi. Öğretmen incelemesi önerilir."
+          "whyThisScore": "Öğrenci yanıtı öğretmenin belirlediği 4 rubrik ölçütüne ve 3 zorunlu anlamsal kavrama göre analiz edilmiştir. Toplam 43 puan hesaplanmıştır.",
+          "strengths": "Konuyla ilgili temel düzeyde birkaç terim kullanılmış.",
+          "weaknesses": "Açık uçlu sorunun gerektirdiği bilimsel derinlik karşılanmamış; kavram yanılgısı veya büyük boşluk mevcut.",
+          "verdict": "Düşük puan önerildi. Öğretmen incelemesi gerekmektedir."
         },
-        "studentFeedbackDraft": "Elif, dikkat etmen gereken çok kritik bir kavram yanılgısı var: 'Karanlık evre' (Calvin döngüsü) kesinlikle gece gerçekleşmez. Işık evresinde üretilen ATP ve NADPH depolanamadığı için Calvin döngüsü de gündüz sürer. Ayrıca ATP ve NADPH sentezini mutlaka tekrar etmelisin."
+        "studentFeedbackDraft": "Yanıtında konunun bazı ana hatları mevcut; ancak öğretmenimizin rubrikte özellikle aradığı bazı zorunlu ara kavramlar eksik kalmış. Vurgulanan eksik kısımları gözden geçirmeni tavsiye ederim."
       },
       "teacherReview": {
         "isApproved": false,

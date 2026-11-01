@@ -1,4 +1,4 @@
-// server.js - AkordEval: Akıllı Açık Uçlu Sınav Değerlendirme & Rubrik Doğrulama Sistemi
+// server.js - AkordAi: Akıllı Açık Uçlu Sınav Değerlendirme & Rubrik Doğrulama Sistemi
 const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -611,7 +611,7 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, () => {
   console.log(`=======================================================`);
-  console.log(`🚀 AkordEval Sunucusu Başarıyla Başlatıldı!`);
+  console.log(`🚀 AkordAi Sunucusu Başarıyla Başlatıldı!`);
   console.log(`📡 URL: http://localhost:${PORT}`);
   console.log(`👨‍🏫 Öğretmen Sayfası: Öğrenci Profilleri -> Dersler -> Sınavlar -> Değerlendirme`);
   console.log(`=======================================================`);

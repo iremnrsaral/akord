@@ -1,4 +1,4 @@
-// public/app.js - AkordEval Vue 3 Client Application
+// public/app.js - AkordAi Vue 3 Client Application
 const { createApp, ref, computed, onMounted } = Vue;
 
 createApp({
